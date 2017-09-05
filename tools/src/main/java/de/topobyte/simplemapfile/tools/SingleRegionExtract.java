@@ -51,7 +51,7 @@ import de.topobyte.osm4j.geometry.GeometryBuilder;
 import de.topobyte.osm4j.utils.FileFormat;
 import de.topobyte.osm4j.utils.OsmIoUtils;
 import de.topobyte.simplemapfile.core.EntityFile;
-import de.topobyte.simplemapfile.xml.FileWriter;
+import de.topobyte.simplemapfile.xml.SmxFileWriter;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 /**
@@ -222,7 +222,7 @@ public class SingleRegionExtract
 		}
 
 		try {
-			FileWriter.write(entityFile, new File(argOutput));
+			SmxFileWriter.write(entityFile, new File(argOutput));
 		} catch (IOException e) {
 			System.out.println(
 					"unable to serialize, IOException: " + e.getMessage());

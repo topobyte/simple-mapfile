@@ -35,8 +35,8 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.simplemapfile.utils.PolygonLoader;
-import de.topobyte.simplemapfile.xml.FileReader;
-import de.topobyte.simplemapfile.xml.FileWriter;
+import de.topobyte.simplemapfile.xml.SmxFileReader;
+import de.topobyte.simplemapfile.xml.SmxFileWriter;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 /**
@@ -86,7 +86,7 @@ public class SmxSetGeometry
 		// read input file
 		EntityFile entityFile = null;
 		try {
-			entityFile = FileReader.read(argInput);
+			entityFile = SmxFileReader.read(argInput);
 		} catch (IOException e) {
 			logger.debug("unable to load entity: " + argInput);
 		} catch (ParserConfigurationException e) {
@@ -114,7 +114,7 @@ public class SmxSetGeometry
 
 		// write output file
 		try {
-			FileWriter.write(entityFile, argOutput);
+			SmxFileWriter.write(entityFile, argOutput);
 		} catch (IOException e) {
 			logger.debug("unable to store entity: " + argOutput);
 		} catch (TransformerException e) {

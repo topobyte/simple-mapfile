@@ -37,8 +37,8 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.simplify.TopologyPreservingSimplifier;
 
 import de.topobyte.simplemapfile.core.EntityFile;
-import de.topobyte.simplemapfile.xml.FileReader;
-import de.topobyte.simplemapfile.xml.FileWriter;
+import de.topobyte.simplemapfile.xml.SmxFileReader;
+import de.topobyte.simplemapfile.xml.SmxFileWriter;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 /**
@@ -89,7 +89,7 @@ public class SmxSimplify
 
 		if (argInput == null) {
 			try {
-				entityFile = FileReader.read(System.in);
+				entityFile = SmxFileReader.read(System.in);
 			} catch (SAXException e) {
 				logger.error("unable to load entity", e);
 			} catch (IOException e) {
@@ -99,7 +99,7 @@ public class SmxSimplify
 			}
 		} else {
 			try {
-				entityFile = FileReader.read(argInput);
+				entityFile = SmxFileReader.read(argInput);
 			} catch (IOException e) {
 				logger.error("unable to load entity: " + argInput, e);
 			} catch (ParserConfigurationException e) {
@@ -145,7 +145,7 @@ public class SmxSimplify
 		// write output file
 		if (argOutput == null) {
 			try {
-				FileWriter.write(outputFile, System.out);
+				SmxFileWriter.write(outputFile, System.out);
 			} catch (TransformerException e) {
 				logger.error("unable to store entity: " + argOutput, e);
 			} catch (ParserConfigurationException e) {
@@ -153,7 +153,7 @@ public class SmxSimplify
 			}
 		} else {
 			try {
-				FileWriter.write(outputFile, argOutput);
+				SmxFileWriter.write(outputFile, argOutput);
 			} catch (IOException e) {
 				logger.debug("unable to store entity: " + argOutput, e);
 			} catch (TransformerException e) {

@@ -38,7 +38,7 @@ import de.topobyte.adt.geo.BBox;
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.simplemapfile.index.SmxIndex;
 import de.topobyte.simplemapfile.index.SmxIndexEntry;
-import de.topobyte.simplemapfile.xml.FileReader;
+import de.topobyte.simplemapfile.xml.SmxFileReader;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 /**
@@ -113,7 +113,7 @@ public class SmxCreateIndex
 			String name = file.getName();
 			EntityFile smx;
 			try {
-				smx = FileReader.read(file);
+				smx = SmxFileReader.read(file);
 			} catch (Exception e) {
 				System.err.println("unable to read file: " + name);
 				continue;

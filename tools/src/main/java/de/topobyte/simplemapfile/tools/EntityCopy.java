@@ -34,8 +34,8 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import de.topobyte.simplemapfile.core.EntityFile;
-import de.topobyte.simplemapfile.xml.FileReader;
-import de.topobyte.simplemapfile.xml.FileWriter;
+import de.topobyte.simplemapfile.xml.SmxFileReader;
+import de.topobyte.simplemapfile.xml.SmxFileWriter;
 
 /**
  * @author Sebastian Kuerten (sebastian@topobyte.de)
@@ -84,7 +84,7 @@ public class EntityCopy
 		String filenameInput = filenames.get(0);
 		EntityFile entityFile = null;
 		try {
-			entityFile = FileReader.read(filenameInput);
+			entityFile = SmxFileReader.read(filenameInput);
 		} catch (IOException e) {
 			logger.debug("unable to load entity: " + filenameInput);
 		} catch (ParserConfigurationException e) {
@@ -101,7 +101,7 @@ public class EntityCopy
 		String filenameOutput = filenames.get(1);
 
 		try {
-			FileWriter.write(entityFile, filenameOutput);
+			SmxFileWriter.write(entityFile, filenameOutput);
 		} catch (IOException e) {
 			logger.debug("unable to store entity: " + filenameInput);
 		} catch (TransformerException e) {

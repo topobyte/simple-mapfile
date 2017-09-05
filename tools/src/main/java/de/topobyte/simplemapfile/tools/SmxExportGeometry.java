@@ -38,7 +38,7 @@ import com.vividsolutions.jts.io.WKBWriter;
 import com.vividsolutions.jts.io.WKTWriter;
 
 import de.topobyte.simplemapfile.core.EntityFile;
-import de.topobyte.simplemapfile.xml.FileReader;
+import de.topobyte.simplemapfile.xml.SmxFileReader;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 /**
@@ -122,7 +122,7 @@ public class SmxExportGeometry
 		logger.info("loading selection boundary");
 		Geometry boundary = null;
 		try {
-			EntityFile entity = FileReader.read(argInput);
+			EntityFile entity = SmxFileReader.read(argInput);
 			boundary = entity.getGeometry();
 		} catch (IOException e) {
 			logger.error(

@@ -44,7 +44,7 @@ import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.simplemapfile.index.SmxIndex;
 import de.topobyte.simplemapfile.index.SmxIndexEntry;
 import de.topobyte.simplemapfile.utils.PolygonLoader;
-import de.topobyte.simplemapfile.xml.FileReader;
+import de.topobyte.simplemapfile.xml.SmxFileReader;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 /**
@@ -134,7 +134,7 @@ public class GeometrySelector
 		logger.info("loading selection boundary");
 		Geometry boundary = null;
 		try {
-			EntityFile entity = FileReader.read(boundaryFile);
+			EntityFile entity = SmxFileReader.read(boundaryFile);
 			boundary = entity.getGeometry();
 		} catch (IOException e) {
 			logger.warn("unable to read geometry as smx, IOException: "
@@ -262,7 +262,7 @@ public class GeometrySelector
 	private static boolean take(Geometry boundary, File file, double threshold)
 	{
 		try {
-			EntityFile entity = FileReader.read(file);
+			EntityFile entity = SmxFileReader.read(file);
 			Geometry geometry = entity.getGeometry();
 			logger.debug(geometry.getGeometryType());
 			double area = geometry.getArea();

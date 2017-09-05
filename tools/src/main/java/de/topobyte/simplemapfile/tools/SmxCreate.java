@@ -34,7 +34,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.simplemapfile.utils.PolygonLoader;
-import de.topobyte.simplemapfile.xml.FileWriter;
+import de.topobyte.simplemapfile.xml.SmxFileWriter;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 /**
@@ -113,7 +113,7 @@ public class SmxCreate
 
 		// write output file
 		try {
-			FileWriter.write(entityFile, argOutput);
+			SmxFileWriter.write(entityFile, argOutput);
 		} catch (IOException e) {
 			logger.debug("unable to store entity: " + argOutput);
 		} catch (TransformerException e) {

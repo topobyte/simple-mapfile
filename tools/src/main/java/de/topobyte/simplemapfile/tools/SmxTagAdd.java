@@ -33,8 +33,8 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import de.topobyte.simplemapfile.core.EntityFile;
-import de.topobyte.simplemapfile.xml.FileReader;
-import de.topobyte.simplemapfile.xml.FileWriter;
+import de.topobyte.simplemapfile.xml.SmxFileReader;
+import de.topobyte.simplemapfile.xml.SmxFileWriter;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 import de.topobyte.utilities.apache.commons.cli.parsing.ArgumentHelper;
 import de.topobyte.utilities.apache.commons.cli.parsing.ArgumentParseException;
@@ -102,7 +102,7 @@ public class SmxTagAdd
 		EntityFile entityFile = null;
 		EntityFile entityFileAdd = null;
 		try {
-			entityFile = FileReader.read(argInput);
+			entityFile = SmxFileReader.read(argInput);
 		} catch (IOException e) {
 			logger.debug("unable to load entity: " + argInput);
 		} catch (ParserConfigurationException e) {
@@ -111,7 +111,7 @@ public class SmxTagAdd
 			logger.debug("unable to load entity: " + argInput);
 		}
 		try {
-			entityFileAdd = FileReader.read(argInputAdd);
+			entityFileAdd = SmxFileReader.read(argInputAdd);
 		} catch (IOException e) {
 			logger.debug("unable to load entity: " + argInputAdd);
 		} catch (ParserConfigurationException e) {
@@ -142,7 +142,7 @@ public class SmxTagAdd
 		}
 
 		try {
-			FileWriter.write(entityFile, argOutput);
+			SmxFileWriter.write(entityFile, argOutput);
 		} catch (IOException e) {
 			logger.debug("unable to store entity: " + argOutput, e);
 		} catch (TransformerException e) {

@@ -33,7 +33,7 @@ import de.topobyte.simplemapfile.core.EntityFile;
 /**
  * @author Sebastian Kuerten (sebastian@topobyte.de)
  */
-public class FileReader
+public class SmxFileReader
 {
 
 	public static EntityFile read(String filename)
@@ -47,7 +47,7 @@ public class FileReader
 			throws ParserConfigurationException, SAXException, IOException
 	{
 		SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-		FileHandler handler = new FileHandler();
+		SmxFileHandler handler = new SmxFileHandler();
 
 		if (!file.exists()) {
 			throw new FileNotFoundException();
@@ -68,7 +68,7 @@ public class FileReader
 			throws SAXException, IOException, ParserConfigurationException
 	{
 		SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-		FileHandler handler = new FileHandler();
+		SmxFileHandler handler = new SmxFileHandler();
 
 		parser.parse(input, handler);
 

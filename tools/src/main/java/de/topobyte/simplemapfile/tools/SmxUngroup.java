@@ -40,8 +40,8 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 
 import de.topobyte.simplemapfile.core.EntityFile;
-import de.topobyte.simplemapfile.xml.FileReader;
-import de.topobyte.simplemapfile.xml.FileWriter;
+import de.topobyte.simplemapfile.xml.SmxFileReader;
+import de.topobyte.simplemapfile.xml.SmxFileWriter;
 import de.topobyte.utilities.apache.commons.cli.OptionHelper;
 
 /**
@@ -89,7 +89,7 @@ public class SmxUngroup
 
 		if (argInput == null) {
 			try {
-				entityFile = FileReader.read(System.in);
+				entityFile = SmxFileReader.read(System.in);
 			} catch (SAXException e) {
 				logger.error("unable to load entity", e);
 			} catch (IOException e) {
@@ -99,7 +99,7 @@ public class SmxUngroup
 			}
 		} else {
 			try {
-				entityFile = FileReader.read(argInput);
+				entityFile = SmxFileReader.read(argInput);
 			} catch (IOException e) {
 				logger.error("unable to load entity: " + argInput, e);
 			} catch (ParserConfigurationException e) {
@@ -148,7 +148,7 @@ public class SmxUngroup
 			// write output file
 			File output = new File(directory, String.format("%d.smx", i + 1));
 			try {
-				FileWriter.write(outputFile, output);
+				SmxFileWriter.write(outputFile, output);
 			} catch (IOException e) {
 				logger.debug("unable to store entity: " + output, e);
 			} catch (TransformerException e) {

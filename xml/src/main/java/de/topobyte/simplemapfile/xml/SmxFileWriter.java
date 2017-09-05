@@ -47,7 +47,7 @@ import de.topobyte.simplemapfile.core.EntityFile;
 /**
  * @author Sebastian Kuerten (sebastian@topobyte.de)
  */
-public class FileWriter
+public class SmxFileWriter
 {
 
 	private static int INDENT = 8;

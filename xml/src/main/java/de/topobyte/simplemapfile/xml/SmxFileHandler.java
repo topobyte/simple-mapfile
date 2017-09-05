@@ -40,10 +40,10 @@ import de.topobyte.simplemapfile.core.EntityFile;
 /**
  * @author Sebastian Kuerten (sebastian@topobyte.de)
  */
-public class FileHandler extends DefaultHandler
+public class SmxFileHandler extends DefaultHandler
 {
 
-	final static Logger logger = LoggerFactory.getLogger(FileHandler.class);
+	final static Logger logger = LoggerFactory.getLogger(SmxFileHandler.class);
 
 	private EntityFile entityFile = new EntityFile();
 
