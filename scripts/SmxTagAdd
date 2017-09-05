@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DIR=$(dirname $0)
+CMD="$DIR/smtools"
+CLASS="de.topobyte.simplemapfile.tools.SmxTagAdd"
+
+exec "$CMD" "$CLASS" "$@"

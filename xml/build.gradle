@@ -1,0 +1,14 @@
+if (project.hasProperty("topobyte")) {
+    apply from: 'file:///' + System.getProperty("user.home") \
+        + '/.gradle/topobyte.gradle'
+}
+
+dependencies {
+    compile project(':simple-mapfile-core')
+
+    compile "commons-codec:commons-codec:1.10"
+    compile 'org.slf4j:slf4j-api:1.6.1'
+
+    testRuntime 'org.slf4j:slf4j-log4j12:1.6.1'
+    testRuntime 'log4j:log4j:1.2.16'
+}

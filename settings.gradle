@@ -1,0 +1,5 @@
+include 'core', 'index', 'xml', 'tools'
+project(':core').name = 'simple-mapfile-core'
+project(':index').name = 'simple-mapfile-index'
+project(':xml').name = 'simple-mapfile-xml'
+project(':tools').name = 'simple-mapfile-tools'

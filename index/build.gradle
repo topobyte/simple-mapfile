@@ -1,0 +1,10 @@
+if (project.hasProperty("topobyte")) {
+    apply from: 'file:///' + System.getProperty("user.home") \
+        + '/.gradle/topobyte.gradle'
+}
+
+dependencies {
+    compile project(':simple-mapfile-core')
+
+    compile 'de.topobyte:adt-geo:0.0.3'
+}
