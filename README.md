@@ -12,7 +12,7 @@ Run `./gradlew clean create` to make the scripts work.
 # CLI
 
 | Script                   | Description                                |
-| ------------------------ | ------------------------------------------ |
+| :----------------------- | :----------------------------------------- |
 | SmxAddTag                | add tags to an smx file                    |
 | SmxBuffer                | compute polygon buffer of an smx file      |
 | SmxConvexHull            | compute the convex hull of an smx file     |
