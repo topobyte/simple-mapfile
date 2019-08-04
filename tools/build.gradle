@@ -1,3 +1,47 @@
+buildscript {
+    repositories {
+        maven { url 'http://mvn.topobyte.de' }
+    }
+    dependencies {
+        classpath 'de.topobyte:gradle-launch-and-install-plugin:0.0.2'
+    }
+}
+
+apply plugin: 'application'
+apply plugin: 'de.topobyte.launch-and-install-gradle-plugin'
+
+startScripts.enabled = false
+
+launchAndInstall {
+    installationPath = 'topobyte/simple-mapfile'
+    makeselfLabel = 'Simple Mapfile'
+    createScript(project, 'de.topobyte.osm4j.utils.executables.OsmBboxFilter', 'OsmBboxFilter')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxAddTag', 'SmxAddTag')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxBuffer', 'SmxBuffer')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxConvexHull', 'SmxConvexHull')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxCreate', 'SmxCreate')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxCreateIndex', 'SmxCreateIndex')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxDifference', 'SmxDifference')
+	createScript(project, 'de.topobyte.simplemapfile.tools.EntityCopy', 'EntityCopy')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxExportGeometry', 'SmxExportGeometry')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SingleRegionExtract', 'SingleRegionExtract')
+	createScript(project, 'de.topobyte.simplemapfile.tools.GeometrySelector', 'GeometrySelector')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxGroup', 'SmxGroup')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxRemoveTag', 'SmxRemoveTag')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxSetGeometry', 'SmxSetGeometry')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxSimplify', 'SmxSimplify')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxTagAdd', 'SmxTagAdd')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxTagDiff', 'SmxTagDiff')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxUngroup', 'SmxUngroup')
+	createScript(project, 'de.topobyte.simplemapfile.tools.SmxUnion', 'SmxUnion')
+}
+
+distributions {
+    main {
+        baseName = 'simple-mapfile'
+    }
+}
+
 dependencies {
     compile project(':simple-mapfile-core')
     compile project(':simple-mapfile-index')
