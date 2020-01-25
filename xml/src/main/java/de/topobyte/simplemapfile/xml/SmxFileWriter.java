@@ -21,6 +21,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -66,7 +69,17 @@ public class SmxFileWriter
 			throws TransformerException, ParserConfigurationException,
 			IOException
 	{
-		write(entityFile, new File(filename));
+		write(entityFile, Paths.get(filename));
+	}
+
+	public static void write(EntityFile entityFile, Path file)
+			throws TransformerException, ParserConfigurationException,
+			IOException
+	{
+		OutputStream fos = Files.newOutputStream(file);
+		StreamResult streamResult = new StreamResult(fos);
+		write(entityFile, streamResult);
+		fos.close();
 	}
 
 	public static void write(EntityFile entityFile, File file)

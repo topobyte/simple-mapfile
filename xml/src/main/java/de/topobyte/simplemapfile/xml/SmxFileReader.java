@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -41,6 +43,22 @@ public class SmxFileReader
 	{
 		File file = new File(filename);
 		return read(file);
+	}
+
+	public static EntityFile read(Path file)
+			throws ParserConfigurationException, SAXException, IOException
+	{
+		if (!Files.exists(file)) {
+			throw new FileNotFoundException();
+		}
+
+		if (!Files.isReadable(file)) {
+			throw new IOException("unable to read from specified file");
+		}
+
+		try (InputStream input = Files.newInputStream(file)) {
+			return read(input);
+		}
 	}
 
 	public static EntityFile read(File file)

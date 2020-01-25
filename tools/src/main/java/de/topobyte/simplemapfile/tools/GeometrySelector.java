@@ -18,12 +18,13 @@
 package de.topobyte.simplemapfile.tools;
 
 import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -39,6 +40,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
+import de.topobyte.melon.paths.PathUtil;
 import de.topobyte.simplemapfile.core.EntityFile;
 import de.topobyte.simplemapfile.index.SmxIndex;
 import de.topobyte.simplemapfile.index.SmxIndexEntry;
@@ -71,7 +73,7 @@ public class GeometrySelector
 	 * @param args
 	 *            the program arguments
 	 */
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
 		Options options = new Options();
 		OptionHelper.addL(options, OPTION_BOUNDARY, true, true,
@@ -105,12 +107,12 @@ public class GeometrySelector
 		String boundaryFile = line.getOptionValue(OPTION_BOUNDARY);
 		String outputDirectoryPath = line.getOptionValue(OPTION_OUTPUT);
 
-		File outputDirectory = new File(outputDirectoryPath);
-		if (!outputDirectory.exists()) {
-			outputDirectory.mkdirs();
+		Path outputDirectory = Paths.get(outputDirectoryPath);
+		if (!Files.exists(outputDirectory)) {
+			Files.createDirectories(outputDirectory);
 		}
-		if (!outputDirectory.exists() || !outputDirectory.canWrite()
-				|| !outputDirectory.isDirectory()) {
+		if (!Files.exists(outputDirectory) || !Files.isWritable(outputDirectory)
+				|| !Files.isDirectory(outputDirectory)) {
 			System.out.println("unable to create or write to output directory");
 			System.exit(1);
 		}
@@ -168,17 +170,17 @@ public class GeometrySelector
 
 		logger.info("iterating files");
 		for (String filename : inputFiles) {
-			File file = new File(filename);
-			if (file.isFile()) {
+			Path file = Paths.get(filename);
+			if (Files.isRegularFile(file)) {
 				handle(boundary, threshold, file, outputDirectory);
-			} else if (file.isDirectory()) {
-				File index = new File(file,
-						SmxCreateIndex.DEFAULT_INDEX_FILENAME);
+			} else if (Files.isDirectory(file)) {
+				Path index = file
+						.resolve(SmxCreateIndex.DEFAULT_INDEX_FILENAME);
 				boolean indexWorked = false;
 
-				if (index.exists()) {
+				if (Files.exists(index)) {
 					try {
-						FileInputStream fis = new FileInputStream(index);
+						InputStream fis = Files.newInputStream(index);
 						DataInputStream dis = new DataInputStream(fis);
 						SmxIndex smxIndex = SmxIndex.read(dis);
 						indexWorked = true;
@@ -188,7 +190,7 @@ public class GeometrySelector
 							if (!entryBox.intersects(box)) {
 								continue;
 							}
-							File child = new File(file, entry.getName());
+							Path child = file.resolve(entry.getName());
 							handle(boundary, threshold, child, outputDirectory);
 						}
 					} catch (FileNotFoundException e) {
@@ -205,8 +207,7 @@ public class GeometrySelector
 
 				if (!indexWorked) {
 					// no index, just iterate files
-					File[] children = file.listFiles();
-					for (File child : children) {
+					for (Path child : PathUtil.list(file)) {
 						handle(boundary, threshold, child, outputDirectory);
 					}
 				}
@@ -214,10 +215,10 @@ public class GeometrySelector
 		}
 	}
 
-	private static void handle(Geometry boundary, double threshold, File file,
-			File outputDirectory)
+	private static void handle(Geometry boundary, double threshold, Path file,
+			Path outputDirectory)
 	{
-		String name = file.getName();
+		Path name = file.getFileName();
 
 		boolean take = take(boundary, file, threshold);
 
@@ -225,40 +226,16 @@ public class GeometrySelector
 			return;
 		}
 
-		File outFile = new File(outputDirectory, name);
-		String output = outFile.getPath();
+		Path outFile = outputDirectory.resolve(name);
 		try {
-			logger.info("copying " + name + " to " + output);
-			copyFile(file, outFile);
+			logger.info("copying " + name + " to " + outFile);
+			Files.copy(file, outFile, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
-			logger.debug("unable to copy from " + name + " to " + output);
+			logger.debug("unable to copy from " + name + " to " + outFile);
 		}
 	}
 
-	private static void copyFile(File sourceFile, File destFile)
-			throws IOException
-	{
-		if (!destFile.exists()) {
-			destFile.createNewFile();
-		}
-
-		FileChannel source = null;
-		FileChannel destination = null;
-		try {
-			source = new FileInputStream(sourceFile).getChannel();
-			destination = new FileOutputStream(destFile).getChannel();
-			destination.transferFrom(source, 0, source.size());
-		} finally {
-			if (source != null) {
-				source.close();
-			}
-			if (destination != null) {
-				destination.close();
-			}
-		}
-	}
-
-	private static boolean take(Geometry boundary, File file, double threshold)
+	private static boolean take(Geometry boundary, Path file, double threshold)
 	{
 		try {
 			EntityFile entity = SmxFileReader.read(file);
