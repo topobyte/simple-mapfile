@@ -24,16 +24,15 @@ import java.io.ObjectInputStream;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Base64InputStream;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.io.InputStreamInStream;
+import org.locationtech.jts.io.ParseException;
+import org.locationtech.jts.io.WKBReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.io.InputStreamInStream;
-import com.vividsolutions.jts.io.ParseException;
-import com.vividsolutions.jts.io.WKBReader;
 
 import de.topobyte.simplemapfile.core.EntityFile;
 

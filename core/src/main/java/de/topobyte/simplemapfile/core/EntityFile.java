@@ -20,7 +20,7 @@ package de.topobyte.simplemapfile.core;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.vividsolutions.jts.geom.Geometry;
+import org.locationtech.jts.geom.Geometry;
 
 /**
  * @author Sebastian Kuerten (sebastian@topobyte.de)

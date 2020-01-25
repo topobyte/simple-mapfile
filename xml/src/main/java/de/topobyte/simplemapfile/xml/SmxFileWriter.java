@@ -36,11 +36,10 @@ import javax.xml.transform.sax.TransformerHandler;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.codec.binary.Base64;
+import org.locationtech.jts.geom.Geometry;
+import org.locationtech.jts.io.WKBWriter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.io.WKBWriter;
 
 import de.topobyte.simplemapfile.core.EntityFile;
 
