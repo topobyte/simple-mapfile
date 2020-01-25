@@ -113,8 +113,7 @@ public class SmxFileHandler extends DefaultHandler
 				String base64 = strb.toString();
 				InputStream is = new ByteArrayInputStream(base64.getBytes());
 				Base64InputStream base64is = new Base64InputStream(is);
-				try {
-					ObjectInputStream ois = new ObjectInputStream(base64is);
+				try (ObjectInputStream ois = new ObjectInputStream(base64is)) {
 					Geometry geometry = (Geometry) ois.readObject();
 					entityFile.setGeometry(geometry);
 				} catch (IOException e) {
