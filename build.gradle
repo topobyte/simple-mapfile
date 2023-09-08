@@ -1,5 +1,5 @@
 wrapper {
-    gradleVersion = '5.2.1'
+    gradleVersion = '7.6.1'
 }
 
 allprojects {
@@ -7,17 +7,30 @@ allprojects {
     version = pVersion
 }
 
-subprojects {
+ext.libraries = [
+    project(':simple-mapfile-core'),
+    project(':simple-mapfile-index'),
+    project(':simple-mapfile-xml'),
+]
+
+configure(libraries) {
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+}
+
+configure(subprojects.findAll {it !in libraries}) {
     apply plugin: 'java'
+}
+
+subprojects {
     apply plugin: 'eclipse'
-    apply plugin: 'maven'
 
     repositories {
         maven {
-            url 'http://mvn.topobyte.de'
+            url 'https://mvn.topobyte.de'
         }
         maven {
-            url 'http://mvn.slimjars.com'
+            url 'https://mvn.slimjars.com'
         }
         mavenCentral()
     }
@@ -26,17 +39,9 @@ subprojects {
     targetCompatibility = 1.8
 }
 
-configure([project(':simple-mapfile-core'),
-        project(':simple-mapfile-xml'),
-        project(':simple-mapfile-index')]) {
-
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
-        from sourceSets.main.allSource
-    }
-
-    artifacts {
-        archives sourcesJar
+configure(libraries) {
+    java {
+         withSourcesJar()
     }
 
     def global = new File('info.pom');
@@ -48,20 +53,24 @@ configure([project(':simple-mapfile-core'),
         pomInfo.name = pomInfoL.name
     }
 
-    afterEvaluate { project ->
-        uploadArchives {
-            repositories {
-                mavenDeployer {
-                    pom.project {
-                        name pomInfo.name
-                        description pomInfo.description
-                        url pomInfo.url
-                        licenses {
-                            license {
-                                name pomInfo.licenseName
-                                url pomInfo.licenseUrl
-                                distribution pomInfo.licenseDistribution
-                            }
+    if (project.hasProperty("topobyte")) {
+        apply from: 'file:///' + System.getProperty("user.home") \
+            + '/.gradle/topobyte.gradle'
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.java
+                pom {
+                    name = "$pomInfo.name"
+                    description = "$pomInfo.description"
+                    url = "$pomInfo.url"
+                    licenses {
+                        license {
+                            name = "$pomInfo.licenseName"
+                            url = "$pomInfo.licenseUrl"
+                            distribution = "$pomInfo.licenseDistribution"
                         }
                     }
                 }

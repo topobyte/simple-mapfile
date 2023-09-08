@@ -4,7 +4,7 @@ if (project.hasProperty("topobyte")) {
 }
 
 dependencies {
-    compile project(':simple-mapfile-core')
+    api project(':simple-mapfile-core')
 
-    compile 'de.topobyte:adt-geo:0.1.0'
+    api 'de.topobyte:adt-geo:0.1.0'
 }

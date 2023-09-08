@@ -4,5 +4,5 @@ if (project.hasProperty("topobyte")) {
 }
 
 dependencies {
-    compile 'org.locationtech.jts:jts-core:1.16.1'
+    api 'org.locationtech.jts:jts-core:1.16.1'
 }
